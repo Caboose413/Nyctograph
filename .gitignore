@@ -1,0 +1,21 @@
+OfflineAssets/
+.DS_Store
+Thumbs.db
+
+# Private planning and sensitive local notes
+*.md
+!README.md
+notes/
+private/
+secrets/
+logs/
+
+# Local configuration and credentials
+.env
+.env.*
+*.local
+operator-ai-launch*.log
+
+# Source footage and marketing material (not used by the page)
+Resources/
+__pycache__/

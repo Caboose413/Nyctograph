@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Celestial // Nyctograph</title>
+  <meta name="description" content="A recovered decoder unit from an uncatalogued world. Wake it. Read what its owner could not.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="stars stars-far"></div>
+    <div class="stars stars-near"></div>
+    <div class="horizon"></div>
+    <video id="sky-feed" class="sky-feed" muted loop playsinline preload="auto" poster="media/base-feed-poster.jpg">
+      <source src="media/base-feed.mp4" type="video/mp4">
+    </video>
+    <div class="sky-shade"></div>
+  </div>
+
+  <section id="capture-screen" class="capture-screen" aria-labelledby="capture-title" hidden>
+    <div class="capture-panel">
+      <header class="panel-header">
+        <div>
+          <p class="eyebrow">Nyctograph // unit NX-2142</p>
+          <h1 id="capture-title">Buffer Recovery</h1>
+        </div>
+        <div class="header-actions">
+          <button id="capture-sound" class="ghost-button" type="button" aria-pressed="true">Sound on</button>
+          <button id="capture-skip" class="ghost-button" type="button">Skip &gt;</button>
+        </div>
+      </header>
+
+      <div class="capture-frame">
+        <canvas id="capture-canvas" width="1600" height="900" role="img" aria-label="Recovering capture"></canvas>
+        <video id="capture-loop" class="capture-loop" muted loop playsinline preload="auto" poster="media/carrier-loop-poster.jpg" hidden aria-hidden="true">
+          <source src="media/carrier-loop.mp4" type="video/mp4">
+        </video>
+        <div id="capture-message" class="capture-message" hidden></div>
+        <div id="capture-gate" class="capture-gate" hidden>
+          <p class="capture-gate-title">Flight buffer found</p>
+          <p class="capture-gate-sub">Recovered from unit NX-2142 // last known owner: ▒▒▒▒▒▒</p>
+        </div>
+        <div id="capture-flash" class="capture-flash" aria-hidden="true"></div>
+        <div class="capture-overlay" aria-hidden="true">
+          <div class="capture-overlay-row">
+            <span id="capture-index">CAPTURE 01/04</span>
+            <span id="capture-stamp" class="capture-stamp"></span>
+          </div>
+          <div class="capture-overlay-row">
+            <span id="capture-progress" class="capture-progress"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="capture-caption">
+        <p id="capture-label" class="section-label"></p>
+        <p id="capture-text" class="capture-text" aria-live="polite"></p>
+      </div>
+
+      <footer class="capture-footer">
+        <div id="capture-dots" class="capture-dots" aria-hidden="true"></div>
+        <button id="capture-next" class="primary-button" type="button" disabled>Next capture</button>
+      </footer>
+    </div>
+  </section>
+
+  <main class="shell">
+    <aside class="caretaker" aria-labelledby="caretaker-title">
+      <header class="caretaker-header">
+        <div>
+          <p class="eyebrow">Unresolved Carrier</p>
+          <h2 id="caretaker-title">The Caretaker</h2>
+        </div>
+        <span id="caretaker-state" class="link-state">DORMANT</span>
+      </header>
+
+      <div id="caretaker-log" class="caretaker-log" aria-live="polite"></div>
+
+      <form id="caretaker-form" class="caretaker-form" autocomplete="off">
+        <label for="caretaker-input">you</label>
+        <div class="caretaker-entry">
+          <input id="caretaker-input" spellcheck="false" aria-label="Speak to The Caretaker">
+          <button type="submit">Send</button>
+        </div>
+      </form>
+    </aside>
+
+    <section id="boot-screen" class="panel" aria-labelledby="boot-title">
+      <header class="panel-header">
+        <div>
+          <p class="eyebrow">Recovered field unit</p>
+          <h1 id="boot-title">Nyctograph</h1>
+        </div>
+        <div class="header-actions">
+          <button class="ghost-button reset-button" type="button">Reset unit</button>
+          <span class="status-pill">LOCKED</span>
+        </div>
+      </header>
+
+      <div class="case-strip" aria-label="Unit summary">
+        <span>UNIT NX-2142</span>
+        <span>OWNER SIGNAL: LOST</span>
+        <span>O2 RESERVE: 0%</span>
+      </div>
+
+      <div class="boot-log">
+        <p>It was lying beside a cold camp, half buried in grey dust. The suit next to it was empty a long time ago.</p>
+        <p>The screen still holds a charge. It asks for its owner's passphrase, written in the script the owner was learning.</p>
+      </div>
+
+      <section class="calibration" aria-labelledby="calibration-title">
+        <h2 id="calibration-title" class="section-label">Calibration strip // owner script</h2>
+        <div id="calibration-rows" class="calibration-rows"></div>
+      </section>
+
+      <section class="passphrase-clue" aria-labelledby="passphrase-title">
+        <h2 id="passphrase-title" class="section-label">Owner passphrase</h2>
+        <div id="passphrase-glyphs"></div>
+        <p class="clue-note">Margin note: <em>what my device was built to do to time.</em></p>
+      </section>
+
+      <form id="access-form" class="access-form" novalidate>
+        <div class="field-row">
+          <label for="unit-id">Unit ID</label>
+          <input id="unit-id" name="unit-id" autocomplete="off" required spellcheck="false">
+        </div>
+
+        <div class="field-row">
+          <label for="unit-pass">Passphrase</label>
+          <input id="unit-pass" name="unit-pass" type="password" autocomplete="off" required>
+        </div>
+
+        <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+
+        <button type="submit" class="primary-button">Wake unit</button>
+      </form>
+
+      <p class="casing-note">Stamped on the casing: <strong>NX-2142</strong>
+        <button id="capture-replay" class="text-button" type="button">Replay recovered buffer</button></p>
+    </section>
+
+    <section id="console-screen" class="panel" aria-labelledby="console-title" hidden>
+      <header class="panel-header">
+        <div>
+          <p class="eyebrow">Nyctograph</p>
+          <h1 id="console-title">Owner Archive</h1>
+        </div>
+        <div class="header-actions">
+          <button class="ghost-button reset-button" type="button">Reset unit</button>
+          <span class="status-pill status-open">AWAKE</span>
+        </div>
+      </header>
+
+      <div class="case-strip" aria-label="Unit state">
+        <span>OWNER: ▒▒▒▒▒▒ // VITALS LOST</span>
+        <span id="lexicon-count">LEXICON: 11/26</span>
+        <span id="chapter-label">LAYER: OWNER CAMP</span>
+      </div>
+
+      <section class="console" aria-label="Nyctograph console">
+        <div id="console-output" class="console-output" aria-live="polite"></div>
+        <form id="console-form" class="console-form" autocomplete="off">
+          <label id="console-prompt" for="console-input">nx-2142:~$</label>
+          <input id="console-input" spellcheck="false" aria-label="Console command">
+        </form>
+      </section>
+    </section>
+
+    <section id="reader-screen" class="panel" aria-labelledby="reader-title" hidden>
+      <header class="panel-header">
+        <div>
+          <p id="reader-kicker" class="eyebrow">Owner archive</p>
+          <h1 id="reader-title">Record</h1>
+        </div>
+        <button id="reader-back" class="ghost-button" type="button">&lt; Console</button>
+      </header>
+      <div id="reader-content" class="reader-content"></div>
+    </section>
+  </main>
+
+  <section id="planet-map" class="map-dialog" role="dialog" aria-modal="true" aria-labelledby="map-title" hidden>
+    <div class="map-panel">
+      <header class="map-header">
+        <div>
+          <p class="eyebrow">Surface survey // drag to turn</p>
+          <h2 id="map-title">Uncatalogued World</h2>
+        </div>
+        <button id="map-close" class="ghost-button" type="button">Close survey</button>
+      </header>
+
+      <div class="map-body">
+        <svg id="planet-svg" class="planet-svg" viewBox="0 0 400 400" role="img" aria-label="Rotating survey globe with recovered locations">
+          <defs>
+            <radialGradient id="planet-fill" cx="38%" cy="32%" r="75%">
+              <stop offset="0%" stop-color="#1d3346"/>
+              <stop offset="55%" stop-color="#0c1724"/>
+              <stop offset="100%" stop-color="#05090f"/>
+            </radialGradient>
+            <radialGradient id="planet-rim" cx="50%" cy="50%" r="50%">
+              <stop offset="88%" stop-color="rgba(95, 212, 230, 0)"/>
+              <stop offset="100%" stop-color="rgba(95, 212, 230, 0.35)"/>
+            </radialGradient>
+          </defs>
+          <circle class="planet-disc" cx="200" cy="200" r="170" fill="url(#planet-fill)"/>
+          <path id="planet-graticule" class="planet-graticule"/>
+          <path id="planet-walk" class="planet-walk"/>
+          <circle id="planet-walker" class="planet-walker" r="3"/>
+          <g id="planet-pois"></g>
+          <circle class="planet-rim" cx="200" cy="200" r="170" fill="url(#planet-rim)"/>
+        </svg>
+
+        <div id="map-legend" class="map-legend" aria-label="Recovered location index"></div>
+      </div>
+
+      <footer class="map-footer">
+        <span>BOUNDARY: NONE RECORDED</span>
+        <span>WALK ANY BEARING // YOU RETURN HERE</span>
+      </footer>
+    </div>
+  </section>
+
+  <div id="reward-effect" class="reward-effect" aria-live="assertive" hidden>
+    <div class="reward-card">
+      <span data-reward-kicker>Signal</span>
+      <strong data-reward-title>Recovered</strong>
+    </div>
+  </div>
+
+  <script src="core/sky-feed.js"></script>
+  <script src="core/config.js"></script>
+  <script src="core/state.js"></script>
+  <script src="core/secrets.js"></script>
+  <script src="core/glyphs.js"></script>
+  <script src="core/content.js"></script>
+  <script src="core/audio.js"></script>
+  <script src="core/captures.js"></script>
+  <script src="core/console-ui.js"></script>
+  <script src="core/reward.js"></script>
+  <script src="core/planet-map.js"></script>
+  <script src="core/caretaker.js"></script>
+  <script src="core/commands.js"></script>
+  <script src="core/app.js"></script>
+</body>
+</html>
